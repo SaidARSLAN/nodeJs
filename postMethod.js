@@ -1,11 +1,10 @@
 
 
-let http = require('http')
+const http = require('http')
+const routeHandler = require('./allroutes')
 
 
-let server = http.createServer((request,response) => {
-
-})
+let server = http.createServer(routeHandler)
 
 server.listen(3000)
 
