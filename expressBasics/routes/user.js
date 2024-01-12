@@ -31,9 +31,26 @@ const data = {
     ]
 }
 
-router.use("/blogs/:id",(request,response) => {
+router.use("/blogs/:id", async (request,response) => {
+    const id = request.params.id
+    
+    try {
+        const [blog, ] = await db.execute("select * from blog where blogid=?",[id])
 
-    response.render('users/blog-details')
+        if (blog[0]) {
+            return response.render('users/blog-details',{
+                blog : blog[0]
+            })
+        }
+        response.redirect("/")
+
+       
+    }
+    catch (err) {
+        console.log(err)
+    }
+
+
 
 })
 
