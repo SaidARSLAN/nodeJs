@@ -7,6 +7,10 @@ const express = require('express')
 // Express bizim için bir uygulama oluşturacak!
 const app = express()
 
+app.set("view engine","ejs")
+
+console.log(app.get("view engine"))
+
 const userRoutes = require('./routes/user')
 const adminRoutes = require('./routes/admin')
 // Statik dosyalar için
