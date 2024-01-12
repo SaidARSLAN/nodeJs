@@ -1,10 +1,11 @@
-
-
-
 const express = require('express')
-
 const router = express.Router()
 
+const data = {
+    title : "Popüler Kurslar",
+    categories : ["Web Geliştirme","Programlama","Mobil Uygulamalar","Veri Analizi","Ofis Uygulamaları"
+]
+}
 
 router.use("/blogs/:id",(request,response) => {
 
@@ -21,7 +22,7 @@ router.use("/blogs",(request,response) => {
 
 // Use metodu ile gelen istekleri ve cevapları ele alabiliyoruz!
 router.use("/",(request,response) => {
-    response.render('users/index')
+    response.render('users/index',data)
 })
 
 module.exports = router
