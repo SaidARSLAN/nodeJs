@@ -11,18 +11,8 @@
 </head>
 <body>
   
-    <nav class="navbar navbar-dark bg-primary navbar-expand-lg">
+    <%- include("../partials/nav") %>
 
-        <div class="container">
-            <a href="/" class="navbar-brand">Blogapp</a>
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a href="/blogs" class="nav-link">blog listesi</a>
-                </li>
-            </ul>
-        </div>
-
-    </nav>
 
     <div class="container mt-3">
         <div class="row">
@@ -35,11 +25,7 @@
 
                     <% } %> -->
 
-                    <% categories.forEach(function(category) { %>
-                        <a href="" class="list-group-item list-group-item-action">
-                            <%= category %>
-                        </a>
-                   <% }) %>
+                    <%- include('../partials/categories',categories) %>
 
                 </div>
             </div>
@@ -73,7 +59,10 @@
                    <% }) %>
               
             </div>
+            
         </div>
+        <%- include('../partials/paginations') %>
+
     </div>
 
 </body>

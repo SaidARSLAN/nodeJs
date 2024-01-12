@@ -10,18 +10,7 @@
 <body>
   
     <!-- Navigation -->
-    <nav class="navbar navbar-dark bg-primary navbar-expand-lg">
-
-        <div class="container">
-            <a href="/" class="navbar-brand">Blogapp</a>
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a href="/blogs" class="nav-link">blog listesi</a>
-                </li>
-            </ul>
-        </div>
-
-    </nav>
+        <%- include("../partials/nav") %>
     <!-- Menu -->
     <div class="container mt-3">
 
@@ -121,32 +110,13 @@
 
             </div>
 
-    </div>
-        <nav>
-            <ul class="pagination justify-content-center">
-                <li class="page-item">
-                    <a href="" class="page-link">Geri</a>
-                </li>
-                <li class="page-item active">
-                    <a href="" class="page-link">1</a>
-                </li>
-                <li class="page-item">
-                    <a href="" class="page-link">2</a>
-                </li>
-                <li class="page-item">
-                    <a href="" class="page-link">3</a>
-                </li>
-                <li class="page-item">
-                    <a href="" class="page-link">İleri</a>
-                </li>
-            </ul>
-        </nav>
+    </div>    
+                <%- include('../partials/paginations') %>
             </div>
             
         </div>
         
     </div>
-    <!-- Pagination -->
 
 </body>
 </html>
