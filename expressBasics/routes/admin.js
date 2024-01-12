@@ -6,18 +6,18 @@ const router = express.Router()
 
 router.use("/blog/create",(request,response) => {
     
-    response.sendFile(path.join(__dirname,'../views/admin','blog-create.html'))
+    response.render('admin/blog-create')
 
 })
 
 router.use("/blog/:blogid",(request,response) => {
     
-    response.sendFile(path.join(__dirname,'../views/admin','blog-edit.html'))
+    response.render('admin/blog-edit')
 
 })
 router.use("/blogs",(request,response) => {
     
-    response.sendFile(path.join(__dirname,'../views/admin','blog-list.html'))
+    response.render('admin/blog-list')
 
 })
 
