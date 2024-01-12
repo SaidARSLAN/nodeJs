@@ -1,6 +1,10 @@
 const express = require('express')
 const router = express.Router()
 
+const db = require('../data/db')
+
+
+
 const data = {
     title : "Popüler Kurslar",
     categories : ["Web Geliştirme","Programlama","Mobil Uygulamalar","Veri Analizi","Ofis Uygulamaları"],
@@ -35,14 +39,22 @@ router.use("/blogs/:id",(request,response) => {
 
 router.use("/blogs",(request,response) => {
     
-    response.render('users/blogs')
+    response.render('users/blogs',data)
 
 })
 
 
 // Use metodu ile gelen istekleri ve cevapları ele alabiliyoruz!
 router.use("/",(request,response) => {
-    response.render('users/index',data)
+    db.execute("select * from blog")
+    .then(result => {
+        response.render('users/index',{
+            title : "Popüler Kurslar",
+            blogs: result[0],
+            categories : data.categories
+        })
+    })
+    .catch(err => console.log(err))
 })
 
 module.exports = router
