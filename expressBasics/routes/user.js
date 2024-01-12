@@ -45,16 +45,23 @@ router.use("/blogs",(request,response) => {
 
 
 // Use metodu ile gelen istekleri ve cevapları ele alabiliyoruz!
-router.use("/",(request,response) => {
-    db.execute("select * from blog")
-    .then(result => {
+router.use("/", async (request,response) => {
+
+    try {
+        const [blogs, ] = await db.execute("select * from blog where onay=1 and anasayfa=1")
+        const [categories, ] = await db.execute("select * from categories")
         response.render('users/index',{
             title : "Popüler Kurslar",
-            blogs: result[0],
-            categories : data.categories
+            blogs: blogs,
+            categories : categories
+
+
         })
-    })
-    .catch(err => console.log(err))
+    }
+    catch (err) {
+        console.log(err)
+    }
+
 })
 
 module.exports = router
