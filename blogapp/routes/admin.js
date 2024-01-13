@@ -5,7 +5,8 @@ const db = require('../data/db')
 
 
 
-router.use("/blogs/create", async function(req, res) {
+router.get("/blogs/create", async function(req, res) {
+
     try {
 
         // Birincisi sorgudan dönecekler bilgiler, ikincisi kolon bilgileri
@@ -21,12 +22,32 @@ router.use("/blogs/create", async function(req, res) {
     }
     
 });
+router.post("/blogs/create", async (req,res) => {
+    const baslik = req.body.title
+    const aciklama = req.body.description
+    const resim = req.body.resim
+    const kategori = req.body.category === '' ? 0 : req.body.category
+    const anasayfa = req.body.mainpage == 'on' ? 1 : 0;
+    const onay = req.body.aprove == "on" ? 1 : 0;
+    console.log(baslik,aciklama,resim,kategori,anasayfa,onay)
+    console.log(req.body) // Formun içerisinden girilen data bilgilerini verir!
 
-router.use("/blogs/:blogid", function(req, res) {
+    try {
+        await db.execute("INSERT INTO blog(baslik,aciklama,resim,categoryid,anasayfa,onay) VALUES (?,?,?,?,?,?)",
+            [baslik,aciklama,resim,kategori,anasayfa,onay]
+        )
+        res.redirect("/")
+    }
+    catch (err) {
+        console.log(err)
+    }
+
+})
+router.get("/blogs/:blogid", function(req, res) {
     res.render("admin/blog-edit");
 });
 
-router.use("/blogs", function(req, res) {
+router.get("/blogs", function(req, res) {
     res.render("admin/blog-list");
 });
 
