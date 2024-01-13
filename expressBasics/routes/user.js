@@ -31,6 +31,26 @@ const data = {
     ]
 }
 
+router.use("/blogs/category/:categoryid", async (req,res) => {
+    const id = req.params.id
+    try {
+        const [blog, ] = await db.execute("select * from blog where categoryId=?",[id])
+        const [category, ] = await db.execute("select * from blog where categoryId=?",[id])
+        if (category[0]) {
+            return response.render('users/blog-details',{
+                blog : blog[0],
+                category : category[0]
+            })
+        }
+        response.redirect("/")
+
+       
+    }
+    catch (err) {
+        console.log(err)
+    }
+})
+
 router.use("/blogs/:id", async (request,response) => {
     const id = request.params.id
     
