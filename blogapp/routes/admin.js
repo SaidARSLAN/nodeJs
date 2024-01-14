@@ -36,7 +36,7 @@ router.post("/blogs/create", async (req,res) => {
         await db.execute("INSERT INTO blog(baslik,aciklama,resim,categoryid,anasayfa,onay) VALUES (?,?,?,?,?,?)",
             [baslik,aciklama,resim,kategori,anasayfa,onay]
         )
-        res.redirect("/")
+        res.redirect("/admin/blogs")
     }
     catch (err) {
         console.log(err)
@@ -47,8 +47,18 @@ router.get("/blogs/:blogid", function(req, res) {
     res.render("admin/blog-edit");
 });
 
-router.get("/blogs", function(req, res) {
-    res.render("admin/blog-list");
+router.get("/blogs", async function(req, res) {
+    try {
+        const [blogs,] = await db.execute("select blogid,baslik,resim from blog");
+        res.render("admin/blog-list",{
+            title : "blog list",
+            blogs: blogs
+        })
+    }
+
+    catch (err) {
+        console.log(err)
+    }
 });
 
 module.exports = router;
