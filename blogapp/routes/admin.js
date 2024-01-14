@@ -5,6 +5,37 @@ const db = require('../data/db')
 
 
 
+router.get("/blogs/delete/:blogid", async (req,res) => {
+
+    const blogid = req.params.blogid;
+
+    try {
+        const [blogs,] = await db.execute("select * from blog where blogid=?",[blogid])
+        const blog = blogs[0];
+
+        res.render("admin/blog-delete", {
+            title : "delete blog",
+            blog : blog,
+        })
+    }
+    catch (err) {
+        console.log(err)
+    }
+
+})
+
+router.post("/blog/delete/:blogid", async (req,res) => {
+
+    const blogid = req.body.blogid
+    try {
+        await db.execute("delete from blog where blogid=?",[blogid])
+        res.redirect("/admin/blogs")
+    }
+    catch (err) {
+        console.log(err)
+    }
+})
+
 router.get("/blogs/create", async function(req, res) {
 
     try {
@@ -43,6 +74,31 @@ router.post("/blogs/create", async (req,res) => {
     }
 
 })
+
+router.post("/blogs/:blogid", async (req,res) => {
+
+    const blogid = req.body.blogid;
+    const baslik = req.body.title;
+    const aciklama = req.body.description;
+    const resim = req.body.resim;
+    const anasayfa = req.params.mainpage == "on" ? 1 : 0;
+    const onay = req.body.aprove == "on" ? 1 : 0;
+    const kategori = req.body.category === '' ? 0 : req.body.category
+    console.log(blogid,baslik,aciklama,resim,anasayfa,onay,kategori)
+    try {
+        await db.execute("UPDATE blog SET baslik=?, aciklama=?, resim=?, anasayfa=?,onay=?, categoryid=? WHERE blogid=?",
+            [baslik,aciklama,resim,anasayfa,onay,kategori,blogid]
+            )
+            res.redirect("/admin/blogs")
+    }
+    catch (error) {
+        console.log(error)
+    }
+})
+
+
+
+
 router.get("/blogs/:blogid", async function(req, res) {
     const blogid = req.params.blogid;
 
